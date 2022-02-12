@@ -4,4 +4,7 @@ djangorestframework
 django-cors-headers
 djangorestframework_simplejwt
 pytest
-pytest-django 
+pytest-django
+celery
+django-celery-results
+redis

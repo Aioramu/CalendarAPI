@@ -1,6 +1,25 @@
 version: "3.9"
 
 services:
+  redis:
+    image: redis:5
+  celery:
+    build: .
+    container_name: 'celery'
+    command: bash -c "celery -A CalendarAPI worker -l INFO "
+    ports:
+        - 5555:5555
+    volumes:
+      - .:/code
+    links:
+      - redis
+    depends_on:
+      - web
+      - redis
+    environment:
+      - COMPOSE_HTTP_TIMEOUT=90
+      - TZ=Europe/Moscow
+
   db:
     image: postgres
     environment:
@@ -25,3 +44,9 @@ services:
     environment:
       - DJANGO_SUPERUSER_PASSWORD=adminAdm1n
       - DJANGO_SUPERUSER_EMAIL=admin@admin.com
+      - EMAIL_PASS=
+      - TZ=Europe/Moscow
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge

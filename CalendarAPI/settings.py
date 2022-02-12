@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
     'rest_framework',
     'rest_framework_simplejwt',
     'authorization.apps.AuthorizationConfig',
@@ -109,7 +110,36 @@ REST_FRAMEWORK = {
     ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+  }
+}
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'zzewrzare@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS', '')
 
+
+CELERY_TIMEZONE = 'Europe/Moscow'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+#CELERY_RESULT_BACKEND = 'django-db'
+#CELERY_RESULT_BACKEND = 'django-cache'
+CELERY_CACHE_BACKEND = 'default'
+#redis
+
+REDIS_HOST='redis'
+REDIS_PORT='6379'
+CELERY_BROKER_URL='redis://'+REDIS_HOST+':'+ REDIS_PORT+'/0'
+CELERY_BROKER_TRANSPORT_OPTIONS={'visiuability_timeout':3600}
+CELERY_RESULT_BACKEND='redis://'+REDIS_HOST+':'+ REDIS_PORT+'/0'
+CELERY_ACCEPT_CONTENT=['application/json']
+CELERY_TASK_SERIALIZER='json'
+CELERY_RESULT_SERIALIZER='json'
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -164,7 +194,7 @@ SIMPLE_JWT = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
