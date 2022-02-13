@@ -1,14 +1,17 @@
 from django.shortcuts import render
 
 # Create your views here.
-import datetime
-
 from rest_framework.permissions import IsAuthenticated
 from .models import Events
 from .serializers import EventSerializer
 from rest_framework import generics
 from rest_framework.response import Response
+from django.db.models import Count
+import datetime
+
 from .tasks import mail_sender
+from .formatters import OuterFormatter
+
 
 class EventsView(generics.GenericAPIView):
     queryset = Events.objects.all()
@@ -26,5 +29,7 @@ class EventsView(generics.GenericAPIView):
             return Response(serializer.data)
     def get(self,request):
         queryset=self.get_queryset().filter(user=request.user.email).order_by('time_from')
-        serializer=self.serializer_class(queryset,many=True)
-        return Response(serializer.data)
+        b=OuterFormatter(queryset=queryset,request=request)
+        data=b.group_by_date()
+
+        return Response(data)
