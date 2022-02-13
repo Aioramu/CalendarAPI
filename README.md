@@ -12,4 +12,4 @@ docker-compose up -d
 docker exec -it calendarapi_web_1 bash -c "pytest authorization/tests ; pytest events/tests "
 ```
 
-Документация:
+Документация: https://app.swaggerhub.com/apis-docs/Aioramu/CalendarAPI/1.0.0#/
