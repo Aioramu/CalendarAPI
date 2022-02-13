@@ -19,6 +19,7 @@ services:
     environment:
       - COMPOSE_HTTP_TIMEOUT=90
       - TZ=Europe/Moscow
+      - EMAIL_PASS=
 
   db:
     image: postgres
@@ -44,7 +45,7 @@ services:
     environment:
       - DJANGO_SUPERUSER_PASSWORD=adminAdm1n
       - DJANGO_SUPERUSER_EMAIL=admin@admin.com
-      - EMAIL_PASS=1415612534GGGdfsdntFGHHSREFV377
+      - EMAIL_PASS=
       - TZ=Europe/Moscow
 
 networks:
