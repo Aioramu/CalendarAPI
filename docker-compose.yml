@@ -44,7 +44,7 @@ services:
     environment:
       - DJANGO_SUPERUSER_PASSWORD=adminAdm1n
       - DJANGO_SUPERUSER_EMAIL=admin@admin.com
-      - EMAIL_PASS=
+      - EMAIL_PASS=1415612534GGGdfsdntFGHHSREFV377
       - TZ=Europe/Moscow
 
 networks:

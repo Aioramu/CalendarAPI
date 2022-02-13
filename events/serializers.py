@@ -28,6 +28,8 @@ class EventSerializer(serializers.ModelSerializer):
             ),
         ]
     def validate(self,data):
+        if data['time_to']==data['time_from']:
+            raise serializers.ValidationError("the event must last")
         if data['time_to']==None:
             data['time_to']=data['time_from']
             data['time_to']=data['time_to'].replace(hour=23,minute=59)
